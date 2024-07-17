@@ -1,0 +1,2779 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="2022.3">
+  <Nodes>
+    <Node ToolID="1">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="66" y="231" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" RecordLimit="" SearchSubDirs="False" FileFormat="25">\\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb_DenverReview_20182019.xlsx|||`Airbnb_DenverReview_20182019$`</File>
+          <FormatSpecificOptions>
+            <FirstRowData>False</FirstRowData>
+            <ImportLine>1</ImportLine>
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Airbnb_DenverReview_20182019.xlsx
+Query=`Airbnb_DenverReview_2018201...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="listing_id" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb_DenverReview_20182019.xlsx|||`Airbnb_DenverReview_20182019$`" type="Double" />
+            <Field name="id" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb_DenverReview_20182019.xlsx|||`Airbnb_DenverReview_20182019$`" type="Double" />
+            <Field name="date" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb_DenverReview_20182019.xlsx|||`Airbnb_DenverReview_20182019$`" type="Double" />
+            <Field name="reviewer_id" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb_DenverReview_20182019.xlsx|||`Airbnb_DenverReview_20182019$`" type="Double" />
+            <Field name="reviewer_name" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb_DenverReview_20182019.xlsx|||`Airbnb_DenverReview_20182019$`" type="V_WString" />
+            <Field name="comments" size="1072" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb_DenverReview_20182019.xlsx|||`Airbnb_DenverReview_20182019$`" type="V_WString" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="2">
+      <GuiSettings Plugin="TextPreProcessing">
+        <Position x="714" y="267" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <field>comments</field>
+          <language>EN</language>
+          <lemmatize>true</lemmatize>
+          <digits>true</digits>
+          <punctuation>true</punctuation>
+          <stopwords>true</stopwords>
+          <defaultStopwords>true</defaultStopwords>
+          <addedStopwords> Airbnb, Airbnbae, s</addedStopwords>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="Python" EngineDllEntryPoint="TextPreProcessing\text_preprocessing_engine.py" />
+    </Node>
+    <Node ToolID="3">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.RegEx.RegEx">
+        <Position x="330" y="279" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Field>comments</Field>
+          <RegExExpression value="Regex_Replace([comments],&quot;^\sa-zA-Z]â€™&quot;,'')" />
+          <CaseInsensitve value="True" />
+          <Method>Replace</Method>
+          <Replace expression="">
+            <CopyUnmatched value="True" />
+          </Replace>
+          <ParseSimple>
+            <SplitToRows value="False" />
+            <RootName>comments</RootName>
+            <NumFields value="3" />
+            <ErrorHandling>Warn</ErrorHandling>
+          </ParseSimple>
+          <ParseComplex>
+            <Field field="RegExOut1" type="V_WString" size="255" />
+          </ParseComplex>
+          <Match>
+            <Field>reviewer_name_Matched</Field>
+            <ErrorUnmatched value="False" />
+          </Match>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxRegEx" />
+    </Node>
+    <Node ToolID="4">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.RegEx.RegEx">
+        <Position x="426" y="279" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Field>comments</Field>
+          <RegExExpression value="€" />
+          <CaseInsensitve value="True" />
+          <Method>Replace</Method>
+          <Replace expression="e,">
+            <CopyUnmatched value="True" />
+          </Replace>
+          <ParseSimple>
+            <SplitToRows value="False" />
+            <RootName>comments</RootName>
+            <NumFields value="3" />
+            <ErrorHandling>Warn</ErrorHandling>
+          </ParseSimple>
+          <ParseComplex>
+            <Field field="No Marked Groups Found" type="No Marked Groups Found" size="No Marked Groups Found" />
+          </ParseComplex>
+          <Match>
+            <Field>reviewer_name_Matched</Field>
+            <ErrorUnmatched value="False" />
+          </Match>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxRegEx" />
+    </Node>
+    <Node ToolID="5">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.RegEx.RegEx">
+        <Position x="522" y="279" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Field>comments</Field>
+          <RegExExpression value="â" />
+          <CaseInsensitve value="True" />
+          <Method>Replace</Method>
+          <Replace expression="a">
+            <CopyUnmatched value="True" />
+          </Replace>
+          <ParseSimple>
+            <SplitToRows value="False" />
+            <RootName>comments</RootName>
+            <NumFields value="3" />
+            <ErrorHandling>Warn</ErrorHandling>
+          </ParseSimple>
+          <ParseComplex>
+            <Field field="No Marked Groups Found" type="No Marked Groups Found" size="No Marked Groups Found" />
+          </ParseComplex>
+          <Match>
+            <Field>reviewer_name_Matched</Field>
+            <ErrorUnmatched value="False" />
+          </Match>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxRegEx" />
+    </Node>
+    <Node ToolID="6">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.RegEx.RegEx">
+        <Position x="618" y="279" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Field>comments</Field>
+          <RegExExpression value="™" />
+          <CaseInsensitve value="True" />
+          <Method>Replace</Method>
+          <Replace expression="">
+            <CopyUnmatched value="True" />
+          </Replace>
+          <ParseSimple>
+            <SplitToRows value="False" />
+            <RootName>comments</RootName>
+            <NumFields value="3" />
+            <ErrorHandling>Warn</ErrorHandling>
+          </ParseSimple>
+          <ParseComplex>
+            <Field field="No Marked Groups Found" type="No Marked Groups Found" size="No Marked Groups Found" />
+          </ParseComplex>
+          <Match>
+            <Field>reviewer_name_Matched</Field>
+            <ErrorUnmatched value="False" />
+          </Match>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxRegEx" />
+    </Node>
+    <Node ToolID="9">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="810" y="282" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="cleaning_fee" selected="True" type="Int64" size="8" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="16">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="258" y="279" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Mode>Simple</Mode>
+          <Simple>
+            <Operator>IsNotNull</Operator>
+            <Field>comments</Field>
+            <Operands>
+              <IgnoreTimeInDateTime>True</IgnoreTimeInDateTime>
+              <DateType>fixed</DateType>
+              <PeriodDate>2023-02-27 20:40:52</PeriodDate>
+              <PeriodType>
+              </PeriodType>
+              <PeriodCount>0</PeriodCount>
+              <Operand>
+              </Operand>
+              <StartDate>2023-02-27 20:40:52</StartDate>
+              <EndDate>2023-02-27 20:40:52</EndDate>
+            </Operands>
+          </Simple>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>!IsNull([comments])</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="31">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Join.Join">
+        <Position x="174" y="279" />
+      </GuiSettings>
+      <Properties>
+        <Configuration joinByRecordPos="False">
+          <JoinInfo connection="Left">
+            <Field field="listing_id" />
+          </JoinInfo>
+          <JoinInfo connection="Right">
+            <Field field="id" />
+          </JoinInfo>
+          <SelectConfiguration>
+            <Configuration outputConnection="Join">
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Right_id" selected="True" rename="Right_id" input="Right_" />
+                <SelectField field="*Unknown" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoin" />
+    </Node>
+    <Node ToolID="32">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="54" y="399" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" RecordLimit="" SearchSubDirs="False" FileFormat="25">\\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`</File>
+          <FormatSpecificOptions>
+            <FirstRowData>False</FirstRowData>
+            <ImportLine>1</ImportLine>
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Airbnb-Denver-Listings.xlsx
+Query=`Airbnb-Denver-Listings$`</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="id" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="listing_url" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="name" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_WString" />
+            <Field name="summary" size="1004" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_WString" />
+            <Field name="experiences_offered" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="interaction" size="1012" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_WString" />
+            <Field name="house_rules" size="1022" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_WString" />
+            <Field name="host_id" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="host_url" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="host_name" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_WString" />
+            <Field name="host_since" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="host_response_time" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="host_is_superhost" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="host_identity_verified" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="neighbourhood" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="zipcode" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="property_type" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="room_type" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="accommodates" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="bathrooms" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="bedrooms" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="beds" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="bed_type" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="amenities" size="1329" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_WString" />
+            <Field name="square_feet" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="price" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="weekly_price" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="monthly_price" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="cleaning_fee" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="minimum_nights" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="availability_365" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="number_of_reviews" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="first_review" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="last_review" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="review_scores_rating" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="review_scores_accuracy" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="review_scores_cleanliness" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="review_scores_checkin" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="review_scores_communication" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="review_scores_location" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="review_scores_value" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="instant_bookable" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="cancellation_policy" size="255" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="V_String" />
+            <Field name="calculated_host_listings_count" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+            <Field name="reviews_per_month" source="File: \\Mac\Home\Documents\DU 23-24 Winter Quarter\INFO 3400\Course Project\Airbnb-Denver-Listings.xlsx|||`Airbnb-Denver-Listings$`" type="Double" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="75">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="882" y="258" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="host_is_superhost" selected="True" />
+            <SelectField field="neighbourhood" selected="True" />
+            <SelectField field="zipcode" selected="True" type="V_String" size="19" />
+            <SelectField field="property_type" selected="True" />
+            <SelectField field="room_type" selected="True" />
+            <SelectField field="accommodates" selected="True" />
+            <SelectField field="bathrooms" selected="True" />
+            <SelectField field="bedrooms" selected="True" />
+            <SelectField field="beds" selected="True" />
+            <SelectField field="bed_type" selected="True" />
+            <SelectField field="price" selected="True" />
+            <SelectField field="cleaning_fee" selected="True" />
+            <SelectField field="minimum_nights" selected="True" />
+            <SelectField field="availability_365" selected="True" />
+            <SelectField field="number_of_reviews" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="78">
+      <GuiSettings>
+        <Position x="966" y="258" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="estimation pct">60</Value>
+          <Value name="validation pct">40</Value>
+          <Value name="rand seed">1</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Predictive Tools\Create_Samples.yxmc" />
+    </Node>
+    <Node ToolID="80">
+      <GuiSettings Plugin="Linear_Regression">
+        <Position x="1098" y="246" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="curPage">Home</Value>
+          <Value name="curTab">advanced</Value>
+          <Value name="standardize_pred">True</Value>
+          <Value name="internal_cv">True</Value>
+          <Value name="display_graphs">True</Value>
+          <Value name="set_seed_internal_cv">True</Value>
+          <Value name="set_seed_external_cv">True</Value>
+          <Value name="lambda_1se">True</Value>
+          <Value name="lambda_min">False</Value>
+          <Value name="Model Name">Linear w/o Text</Value>
+          <Value name="Y Var">price</Value>
+          <Value name="X Vars">host_is_superhost,host_identity_verified,property_type,room_type,accommodates,bathrooms,bedrooms,beds,bed_type,cleaning_fee,minimum_nights,availability_365,number_of_reviews</Value>
+          <Value name="Omit Constant">False</Value>
+          <Value name="Use Weights">False</Value>
+          <Value name="Weight Vec" />
+          <Value name="regularization">False</Value>
+          <Value name="alpha">0.5</Value>
+          <Value name="nfolds">5</Value>
+          <Value name="lambda">lambda_1se</Value>
+          <Value name="seed_internal_cv">1</Value>
+          <Value name="lambda_no_cv">0.5</Value>
+          <Value name="external_cv">False</Value>
+          <Value name="nfolds_external">5</Value>
+          <Value name="numberTrials">3</Value>
+          <Value name="external_seed_value">1</Value>
+          <Value name="graph.resolution">1x</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Linear w/o Text</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Linear_Regression/Supporting_Macros/Linear_Regression.yxmc" EngineDll="Macro" EngineDllEntryPoint="Linear_Regression/Supporting_Macros/Linear_Regression.yxmc" />
+    </Node>
+    <Node ToolID="81">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1194" y="246" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_6524_1933763fa0b4c04f8bcf10c32994f67a_\Engine_6524_f74d49e4cd4585449557ef1c4e82a62a~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Report</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="82">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1194" y="330" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_6524_1933763fa0b4c04f8bcf10c32994f67a_\Engine_6524_c3054ed74b946049a009d307fceb1a85~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Report</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="83">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1014" y="462" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="84">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1110" y="438" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="host_is_superhost" selected="True" />
+            <SelectField field="neighbourhood" selected="True" />
+            <SelectField field="zipcode" selected="True" type="V_String" size="19" />
+            <SelectField field="property_type" selected="True" />
+            <SelectField field="room_type" selected="True" />
+            <SelectField field="accommodates" selected="True" />
+            <SelectField field="bathrooms" selected="True" />
+            <SelectField field="bedrooms" selected="True" />
+            <SelectField field="beds" selected="True" />
+            <SelectField field="bed_type" selected="True" />
+            <SelectField field="price" selected="True" />
+            <SelectField field="cleaning_fee" selected="True" />
+            <SelectField field="minimum_nights" selected="True" />
+            <SelectField field="availability_365" selected="True" />
+            <SelectField field="number_of_reviews" selected="True" />
+            <SelectField field="negative_sentiment" selected="True" />
+            <SelectField field="neutral_sentiment" selected="True" />
+            <SelectField field="positive_sentiment" selected="True" />
+            <SelectField field="compound_sentiment_score" selected="True" />
+            <SelectField field="sentiment_category" selected="True" />
+            <SelectField field="comment_length" selected="True" type="Int64" size="8" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="85">
+      <GuiSettings>
+        <Position x="1206" y="438" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="estimation pct">60</Value>
+          <Value name="validation pct">40</Value>
+          <Value name="rand seed">1</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Predictive Tools\Create_Samples.yxmc" />
+    </Node>
+    <Node ToolID="86">
+      <GuiSettings Plugin="Linear_Regression">
+        <Position x="1302" y="426" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="curPage">Home</Value>
+          <Value name="curTab">advanced</Value>
+          <Value name="standardize_pred">True</Value>
+          <Value name="internal_cv">True</Value>
+          <Value name="display_graphs">True</Value>
+          <Value name="set_seed_internal_cv">True</Value>
+          <Value name="set_seed_external_cv">True</Value>
+          <Value name="lambda_1se">True</Value>
+          <Value name="lambda_min">False</Value>
+          <Value name="Model Name">Linear_Regression_86</Value>
+          <Value name="Y Var">price</Value>
+          <Value name="X Vars">host_is_superhost,property_type,room_type,accommodates,bathrooms,bedrooms,beds,bed_type,cleaning_fee,minimum_nights,availability_365,number_of_reviews,compound_sentiment_score,comment_length</Value>
+          <Value name="Omit Constant">False</Value>
+          <Value name="Use Weights">False</Value>
+          <Value name="Weight Vec" />
+          <Value name="regularization">False</Value>
+          <Value name="alpha">0.5</Value>
+          <Value name="nfolds">5</Value>
+          <Value name="lambda">lambda_1se</Value>
+          <Value name="seed_internal_cv">1</Value>
+          <Value name="lambda_no_cv">0.5</Value>
+          <Value name="external_cv">False</Value>
+          <Value name="nfolds_external">5</Value>
+          <Value name="numberTrials">3</Value>
+          <Value name="external_seed_value">1</Value>
+          <Value name="graph.resolution">1x</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Linear_Regression_86</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Linear_Regression/Supporting_Macros/Linear_Regression.yxmc" EngineDll="Macro" EngineDllEntryPoint="Linear_Regression/Supporting_Macros/Linear_Regression.yxmc" />
+    </Node>
+    <Node ToolID="87">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1398" y="426" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_6524_1933763fa0b4c04f8bcf10c32994f67a_\Engine_6524_13838e72a1e72542a0af99b16d7caf7a~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Report</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="88">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1398" y="510" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_6524_1933763fa0b4c04f8bcf10c32994f67a_\Engine_6524_3e58849082165648a9aecbe8278986dc~.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Report</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="89">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="918" y="510" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="Length([comments_processed])" field="comment_length" size="1073741823" type="V_WString" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText><![CDATA[comment_length = Length([comments_processed])
+]]></DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="68">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="797" y="581" width="397" height="133" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Sentiment Distribution</Caption>
+          <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="25" />
+          <Disabled value="False" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="25">
+          <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+            <Position x="918" y="630" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SummarizeFields>
+                <SummarizeField field="sentiment_category" action="GroupBy" rename="sentiment_category" />
+                <SummarizeField field="sentiment_category" action="Count" rename="Count" />
+              </SummarizeFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+        </Node>
+        <Node ToolID="26">
+          <GuiSettings Plugin="PlotlyCharting">
+            <Position x="1014" y="630" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <ChartingFields>
+                <Traces json:Array="true" xmlns:json="http://james.newtonking.com/projects/json">
+                  <type>bar</type>
+                  <mode>markers</mode>
+                  <orientation>v</orientation>
+                  <name>Sentiment Distrubution</name>
+                  <boxpoints>false</boxpoints>
+                  <decreasing>
+                    <line>
+                      <color>#7f7f7f</color>
+                    </line>
+                    <fillcolor>rgba(127, 127, 127, 0.5)</fillcolor>
+                  </decreasing>
+                  <increasing>
+                    <line>
+                      <color>#17becf</color>
+                    </line>
+                    <fillcolor>rgba(23, 190, 207, 0.5)</fillcolor>
+                  </increasing>
+                  <textposition>outside</textposition>
+                  <marker>
+                    <line>
+                      <width>0</width>
+                    </line>
+                  </marker>
+                  <ysrc>Count</ysrc>
+                  <xsrc>sentiment_category</xsrc>
+                  <textsrc>Count</textsrc>
+                  <textfont>
+                    <size>12</size>
+                  </textfont>
+                </Traces>
+                <Layout>
+                  <title>
+                    <text>
+                    </text>
+                  </title>
+                  <font>
+                    <family>sans-serif</family>
+                    <size>12</size>
+                  </font>
+                  <autosize>false</autosize>
+                  <width>708</width>
+                  <height>849</height>
+                  <showlegend>true</showlegend>
+                  <hovermode>closest</hovermode>
+                  <xaxis>
+                    <range>-0.5</range>
+                    <range>2.5</range>
+                    <autorange>true</autorange>
+                    <tickfont>
+                      <size>12</size>
+                    </tickfont>
+                    <nticks>0</nticks>
+                    <title>
+                      <text>compound_sentiment_score</text>
+                    </title>
+                    <type>category</type>
+                  </xaxis>
+                  <yaxis>
+                    <range>0</range>
+                    <range>12068.421052631578</range>
+                    <autorange>true</autorange>
+                    <title>
+                      <text>Count</text>
+                    </title>
+                    <type>linear</type>
+                  </yaxis>
+                  <margin>
+                    <pad>0</pad>
+                    <t>100</t>
+                    <b>80</b>
+                    <l>80</l>
+                    <r>80</r>
+                  </margin>
+                  <legend>
+                    <font>
+                      <size>12</size>
+                    </font>
+                    <borderwidth>0</borderwidth>
+                  </legend>
+                </Layout>
+              </ChartingFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="PortfolioPluginsEngine.dll" EngineDllEntryPoint="ComposerInteractiveCharting" />
+        </Node>
+        <Node ToolID="27">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="1110" y="630" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_6524_1933763fa0b4c04f8bcf10c32994f67a_\Engine_6524_262a13a71e230843a24b1151cf7cb95e~.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Report</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="8">
+          <GuiSettings Plugin="Sentiment">
+            <Position x="822" y="630" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <language>EN</language>
+              <field>comments_processed</field>
+              <algorithm>VADER</algorithm>
+              <tokenize>false</tokenize>
+              <categorical>true</categorical>
+              <negativeThreshold>-0.1</negativeThreshold>
+              <positiveThreshold>0.5</positiveThreshold>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="Python" EngineDllEntryPoint="Sentiment\sentiment_engine.py" />
+        </Node>
+      </ChildNodes>
+    </Node>
+    <Node ToolID="67">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="941" y="54" width="877" height="182" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Top Keywords Figure</Caption>
+          <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="25" />
+          <Disabled value="True" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="24">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="1542" y="105" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Expression>[Count] &gt; 7609 or [Count] = 908 or [Count] = 926</Expression>
+              <Mode>Custom</Mode>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>[Count] &gt; 7609 or [Count] = 908 or [Count] = 926</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+        <Node ToolID="22">
+          <GuiSettings>
+            <Position x="1062" y="104" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Value name="Check Box (135)">True</Value>
+              <Value name="Check Box (136)">False</Value>
+              <Value name="List Box (11)">""</Value>
+              <Value name="Check Box (84)">False</Value>
+              <Value name="Check Box (117)">False</Value>
+              <Value name="Check Box (15)">True</Value>
+              <Value name="Check Box (109)">False</Value>
+              <Value name="Check Box (122)">False</Value>
+              <Value name="Check Box (53)">False</Value>
+              <Value name="Check Box (58)">False</Value>
+              <Value name="Check Box (70)">False</Value>
+              <Value name="Check Box (77)">False</Value>
+              <Value name="Drop Down (81)">upper</Value>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings Macro="Cleanse.yxmc" />
+        </Node>
+        <Node ToolID="18">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="1446" y="105" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Expression>[Count] &gt;= 752</Expression>
+              <Mode>Custom</Mode>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>[Count] &gt;= 752</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+        <Node ToolID="13">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
+            <Position x="966" y="103" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Field>comments_processed</Field>
+              <Delimeters value="\s" />
+              <NumFields value="1" />
+              <Flags value="0" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTextToColumns" />
+        </Node>
+        <Node ToolID="12">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+            <Position x="1350" y="105" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SortInfo locale="1033">
+                <Field field="Count" order="Descending" />
+              </SortInfo>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>Count - Descending</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+        </Node>
+        <Node ToolID="10">
+          <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+            <Position x="1158" y="103" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SummarizeFields>
+                <SummarizeField field="comments_processed" action="GroupBy" rename="comments_processed" />
+                <SummarizeField field="comments_processed" action="Count" rename="Count" />
+              </SummarizeFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+        </Node>
+        <Node ToolID="23">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="1254" y="104" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Mode>Simple</Mode>
+              <Simple>
+                <Operator>IsNotNull</Operator>
+                <Field>comments_processed</Field>
+                <Operands>
+                  <IgnoreTimeInDateTime>True</IgnoreTimeInDateTime>
+                  <DateType>fixed</DateType>
+                  <PeriodDate>2023-02-27 20:38:23</PeriodDate>
+                  <PeriodType>
+                  </PeriodType>
+                  <PeriodCount>0</PeriodCount>
+                  <Operand>
+                  </Operand>
+                  <StartDate>2023-02-27 20:38:23</StartDate>
+                  <EndDate>2023-02-27 20:38:23</EndDate>
+                </Operands>
+              </Simple>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>!IsNull([comments_processed])</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+        <Node ToolID="17">
+          <GuiSettings Plugin="PlotlyCharting">
+            <Position x="1638" y="105" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <ChartingFields>
+                <Traces json:Array="true" xmlns:json="http://james.newtonking.com/projects/json">
+                  <type>bar</type>
+                  <mode>markers</mode>
+                  <orientation>v</orientation>
+                  <xsrc>Count</xsrc>
+                  <ysrc>comments_processed</ysrc>
+                </Traces>
+                <Layout>
+                  <title>
+                    <text>
+                    </text>
+                  </title>
+                  <font>
+                    <family>sans-serif</family>
+                  </font>
+                  <autosize>false</autosize>
+                  <width>700</width>
+                  <height>849</height>
+                  <showlegend>true</showlegend>
+                  <hovermode>closest</hovermode>
+                  <xaxis>
+                    <range>-1.9474616743253961</range>
+                    <range>49.532346607124389</range>
+                    <autorange>false</autorange>
+                    <title>
+                      <text>Count</text>
+                    </title>
+                    <type>linear</type>
+                  </xaxis>
+                  <yaxis>
+                    <range>-705.10666227861225</range>
+                    <range>7541.4167316908815</range>
+                    <autorange>false</autorange>
+                    <title>
+                      <text>comments_processed</text>
+                    </title>
+                    <type>category</type>
+                  </yaxis>
+                </Layout>
+              </ChartingFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="PortfolioPluginsEngine.dll" EngineDllEntryPoint="ComposerInteractiveCharting" />
+        </Node>
+        <Node ToolID="29">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="1734" y="105" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_7888_a4bb23b9e5356f499cb6a4407346ffc4_\Engine_7888_1746505574cd78418214819d463d9b52~.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Report</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+      </ChildNodes>
+    </Node>
+    <Node ToolID="50">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="1469" y="365" width="1165" height="243" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption><![CDATA[Top Keywords by Property Type ]]></Caption>
+          <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="25" />
+          <Disabled value="True" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="42">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+            <Position x="1494" y="414" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="listing_id" selected="True" />
+                <SelectField field="id" selected="True" />
+                <SelectField field="Right_id" selected="True" />
+                <SelectField field="property_type" selected="True" />
+                <SelectField field="comments_processed" selected="True" />
+                <SelectField field="*Unknown" selected="False" />
+              </SelectFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+        </Node>
+        <Node ToolID="43">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
+            <Position x="1590" y="414" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Field>comments_processed</Field>
+              <Delimeters value="\s" />
+              <NumFields value="1" />
+              <Flags value="0" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTextToColumns" />
+        </Node>
+        <Node ToolID="44">
+          <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+            <Position x="1782" y="414" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SummarizeFields>
+                <SummarizeField field="property_type" action="GroupBy" rename="property_type" />
+                <SummarizeField field="comments_processed" action="GroupBy" rename="comments_processed" />
+                <SummarizeField field="comments_processed" action="Count" rename="Count" />
+              </SummarizeFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+        </Node>
+        <Node ToolID="45">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="2166" y="414" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Mode>Simple</Mode>
+              <Simple>
+                <Operator>&gt;=</Operator>
+                <Field>Count</Field>
+                <Operands>
+                  <IgnoreTimeInDateTime>True</IgnoreTimeInDateTime>
+                  <DateType>fixed</DateType>
+                  <PeriodDate>2023-03-04 16:27:21</PeriodDate>
+                  <PeriodType>
+                  </PeriodType>
+                  <PeriodCount>0</PeriodCount>
+                  <Operand>1630</Operand>
+                  <StartDate>2023-03-04 16:27:21</StartDate>
+                  <EndDate>2023-03-04 16:27:21</EndDate>
+                </Operands>
+              </Simple>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>[Count] &gt;= 1630</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+        <Node ToolID="46">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="2070" y="414" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Mode>Simple</Mode>
+              <Simple>
+                <Operator>&gt;=</Operator>
+                <Field>Count</Field>
+                <Operands>
+                  <IgnoreTimeInDateTime>True</IgnoreTimeInDateTime>
+                  <DateType>fixed</DateType>
+                  <PeriodDate>2023-03-04 16:22:03</PeriodDate>
+                  <PeriodType>
+                  </PeriodType>
+                  <PeriodCount>0</PeriodCount>
+                  <Operand>250</Operand>
+                  <StartDate>2023-03-04 16:22:03</StartDate>
+                  <EndDate>2023-03-04 16:22:03</EndDate>
+                </Operands>
+              </Simple>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>[Count] &gt;= 250</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+        <Node ToolID="47">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+            <Position x="1974" y="414" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SortInfo locale="1033">
+                <Field field="Count" order="Descending" />
+              </SortInfo>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>Count - Descending</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+        </Node>
+        <Node ToolID="48">
+          <GuiSettings Plugin="PlotlyCharting">
+            <Position x="2454" y="414" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <ChartingFields>
+                <Traces json:Array="true" xmlns:json="http://james.newtonking.com/projects/json">
+                  <type>bar</type>
+                  <mode>markers</mode>
+                  <xsrc>comments_processed</xsrc>
+                  <ysrc>Count</ysrc>
+                  <marker>
+                    <size>6</size>
+                    <line>
+                      <width>0</width>
+                    </line>
+                  </marker>
+                  <transforms json:Array="true">
+                    <type>groupby</type>
+                    <groupssrc>property_type</groupssrc>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>Apartment</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>Apartment</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>Apartment</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>Apartment</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                    <groups>House</groups>
+                  </transforms>
+                  <orientation>v</orientation>
+                </Traces>
+                <Layout>
+                  <title>
+                    <text>
+                    </text>
+                  </title>
+                  <font>
+                    <family>sans-serif</family>
+                    <size>12</size>
+                  </font>
+                  <autosize>false</autosize>
+                  <width>700</width>
+                  <height>849</height>
+                  <showlegend>true</showlegend>
+                  <hovermode>closest</hovermode>
+                  <xaxis>
+                    <range>-0.5</range>
+                    <range>49.5</range>
+                    <autorange>true</autorange>
+                    <title>
+                      <text>comments_processed</text>
+                    </title>
+                    <tickfont>
+                      <size>12</size>
+                    </tickfont>
+                    <nticks>0</nticks>
+                    <type>category</type>
+                  </xaxis>
+                  <yaxis>
+                    <range>0</range>
+                    <range>1391.578947368421</range>
+                    <autorange>true</autorange>
+                    <title>
+                      <text>Count</text>
+                    </title>
+                    <type>linear</type>
+                  </yaxis>
+                  <margin>
+                    <pad>0</pad>
+                    <t>100</t>
+                    <b>80</b>
+                    <l>80</l>
+                    <r>80</r>
+                  </margin>
+                  <legend>
+                    <font>
+                      <size>12</size>
+                    </font>
+                    <borderwidth>0</borderwidth>
+                  </legend>
+                </Layout>
+              </ChartingFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="PortfolioPluginsEngine.dll" EngineDllEntryPoint="ComposerInteractiveCharting" />
+        </Node>
+        <Node ToolID="49">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="2550" y="414" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Layout>
+                <View1>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+              </Layout>
+              <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_7888_a4bb23b9e5356f499cb6a4407346ffc4_\Engine_7888_43877ee5aaf57041ba2c29ec31129616~.yxdb</TempFile>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="60">
+          <GuiSettings>
+            <Position x="1686" y="414" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Value name="Check Box (135)">True</Value>
+              <Value name="Check Box (136)">False</Value>
+              <Value name="List Box (11)">"comments_processed"</Value>
+              <Value name="Check Box (84)">False</Value>
+              <Value name="Check Box (117)">False</Value>
+              <Value name="Check Box (15)">True</Value>
+              <Value name="Check Box (109)">False</Value>
+              <Value name="Check Box (122)">False</Value>
+              <Value name="Check Box (53)">False</Value>
+              <Value name="Check Box (58)">False</Value>
+              <Value name="Check Box (70)">False</Value>
+              <Value name="Check Box (77)">False</Value>
+              <Value name="Drop Down (81)">upper</Value>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings Macro="Cleanse.yxmc" />
+        </Node>
+        <Node ToolID="61">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="1878" y="474" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Mode>Simple</Mode>
+              <Simple>
+                <Operator>IsNotNull</Operator>
+                <Field>comments_processed</Field>
+                <Operands>
+                  <IgnoreTimeInDateTime>True</IgnoreTimeInDateTime>
+                  <DateType>fixed</DateType>
+                  <PeriodDate>2023-02-27 20:38:23</PeriodDate>
+                  <PeriodType>
+                  </PeriodType>
+                  <PeriodCount>0</PeriodCount>
+                  <Operand>
+                  </Operand>
+                  <StartDate>2023-02-27 20:38:23</StartDate>
+                  <EndDate>2023-02-27 20:38:23</EndDate>
+                </Operands>
+              </Simple>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>!IsNull([comments_processed])</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+        <Node ToolID="64">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="2262" y="462" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Expression>[Count] = 919 or [Count] = 648 or [Count] = 637 or [Count] = 354</Expression>
+              <Mode>Custom</Mode>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>[Count] = 919 or [Count] = 648 or [Count] = 637 or [Count] = 354</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+        <Node ToolID="66">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Unique.Unique">
+            <Position x="2358" y="510" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <UniqueFields>
+                <Field field="comments_processed" />
+              </UniqueFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxUnique" />
+        </Node>
+      </ChildNodes>
+    </Node>
+    <Node ToolID="37">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="785" y="725" width="385" height="133" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Sentiment Distribution Figure by Neighboorbood</Caption>
+          <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="25" />
+          <Disabled value="True" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="33">
+          <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+            <Position x="894" y="774" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SummarizeFields>
+                <SummarizeField field="neighbourhood" action="GroupBy" rename="neighbourhood" />
+                <SummarizeField field="sentiment_category" action="GroupBy" rename="sentiment_category" />
+                <SummarizeField field="sentiment_category" action="Count" rename="Count" />
+              </SummarizeFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+        </Node>
+        <Node ToolID="34">
+          <GuiSettings Plugin="PlotlyCharting">
+            <Position x="990" y="774" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <ChartingFields>
+                <Traces json:Array="true" xmlns:json="http://james.newtonking.com/projects/json">
+                  <type>bar</type>
+                  <mode>markers</mode>
+                  <name>Sentiment by Neighboorhood</name>
+                  <orientation>v</orientation>
+                  <xsrc>neighbourhood</xsrc>
+                  <ysrc>Count</ysrc>
+                  <transforms json:Array="true">
+                    <type>groupby</type>
+                    <groupssrc>sentiment_category</groupssrc>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>neutral</groups>
+                  </transforms>
+                </Traces>
+                <Layout>
+                  <title>
+                    <text>
+                    </text>
+                  </title>
+                  <font>
+                    <family>sans-serif</family>
+                  </font>
+                  <autosize>false</autosize>
+                  <width>700</width>
+                  <height>849</height>
+                  <showlegend>true</showlegend>
+                  <hovermode>closest</hovermode>
+                  <xaxis>
+                    <range>-16.863879176789162</range>
+                    <range>87.075249006563084</range>
+                    <autorange>false</autorange>
+                    <title>
+                      <text>neighbourhood</text>
+                    </title>
+                    <type>category</type>
+                  </xaxis>
+                  <yaxis>
+                    <range>-165.86296158812843</range>
+                    <range>1570.4817361570049</range>
+                    <autorange>false</autorange>
+                    <title>
+                      <text>Count</text>
+                    </title>
+                    <type>linear</type>
+                  </yaxis>
+                </Layout>
+              </ChartingFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="PortfolioPluginsEngine.dll" EngineDllEntryPoint="ComposerInteractiveCharting" />
+        </Node>
+        <Node ToolID="35">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="1086" y="774" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_7888_a4bb23b9e5356f499cb6a4407346ffc4_\Engine_7888_8c480b088c454d4ea081464cc8e51b7e~.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Report</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="36">
+          <GuiSettings Plugin="Sentiment">
+            <Position x="810" y="774" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <language>EN</language>
+              <field>comments_processed</field>
+              <algorithm>VADER</algorithm>
+              <tokenize>false</tokenize>
+              <categorical>true</categorical>
+              <negativeThreshold>-0.1</negativeThreshold>
+              <positiveThreshold>0.5</positiveThreshold>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="Python" EngineDllEntryPoint="Sentiment\sentiment_engine.py" />
+        </Node>
+      </ChildNodes>
+    </Node>
+    <Node ToolID="40">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="977" y="869" width="469" height="195" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Topic Modeling by Sentiment</Caption>
+          <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="25" />
+          <Disabled value="True" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="39">
+          <GuiSettings Plugin="TopicModel">
+            <Position x="1002" y="954" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <field>comments_processed</field>
+              <topics>3</topics>
+              <dictMinFreq>0.02</dictMinFreq>
+              <dictMaxFreq>0.8</dictMaxFreq>
+              <dictMaxWords>0</dictMaxWords>
+              <alpha>0</alpha>
+              <eta>0</eta>
+              <reportOutputMode>interactiveOutput</reportOutputMode>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="Python" EngineDllEntryPoint="TopicModel\topic_model_engine.py" />
+        </Node>
+        <Node ToolID="41">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="1098" y="954" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_7888_a4bb23b9e5356f499cb6a4407346ffc4_\Engine_7888_5820e8956f72774aaa2e99c8ba2bf9dc~.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Report</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="71">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+            <Position x="1098" y="918" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <FormulaFields>
+                <FormulaField expression="MaxIDX([topic_1], [topic_2],[topic_3])+1" field="dominate_topic" size="1073741823" type="V_WString" />
+              </FormulaFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText><![CDATA[dominate_topic = MaxIDX([topic_1], [topic_2],[topic_3])+1
+]]></DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+        </Node>
+        <Node ToolID="73">
+          <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+            <Position x="1206" y="918" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SummarizeFields>
+                <SummarizeField field="sentiment_category" action="GroupBy" rename="sentiment_category" />
+                <SummarizeField field="dominate_topic" action="GroupBy" rename="dominate_topic" />
+                <SummarizeField field="dominate_topic" action="Count" rename="Count" />
+              </SummarizeFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+        </Node>
+        <Node ToolID="72">
+          <GuiSettings Plugin="PlotlyCharting">
+            <Position x="1290" y="918" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <ChartingFields>
+                <Traces json:Array="true" xmlns:json="http://james.newtonking.com/projects/json">
+                  <type>bar</type>
+                  <mode>markers</mode>
+                  <orientation>v</orientation>
+                  <ysrc>Count</ysrc>
+                  <textposition>None</textposition>
+                  <marker>
+                    <line>
+                      <width>0</width>
+                    </line>
+                  </marker>
+                  <transforms json:Array="true">
+                    <type>groupby</type>
+                    <groupssrc>sentiment_category</groupssrc>
+                    <groups>positive</groups>
+                    <groups>negative</groups>
+                    <groups>neutral</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                    <groups>negative</groups>
+                    <groups>negative</groups>
+                    <groups>positive</groups>
+                    <groups>neutral</groups>
+                  </transforms>
+                  <xsrc>dominate_topic</xsrc>
+                </Traces>
+                <Layout>
+                  <title>
+                    <text>
+                    </text>
+                  </title>
+                  <font>
+                    <family>sans-serif</family>
+                    <size>12</size>
+                  </font>
+                  <autosize>false</autosize>
+                  <width>700</width>
+                  <height>849</height>
+                  <showlegend>true</showlegend>
+                  <hovermode>closest</hovermode>
+                  <xaxis>
+                    <range>-0.5</range>
+                    <range>2.5</range>
+                    <autorange>true</autorange>
+                    <title>
+                      <text>dominate_topic</text>
+                    </title>
+                    <type>category</type>
+                  </xaxis>
+                  <yaxis>
+                    <range>0</range>
+                    <range>5618.9473684210525</range>
+                    <autorange>true</autorange>
+                    <title>
+                      <text>compound_sentiment_score</text>
+                    </title>
+                    <type>linear</type>
+                  </yaxis>
+                  <margin>
+                    <pad>0</pad>
+                    <t>100</t>
+                    <b>80</b>
+                    <l>80</l>
+                    <r>80</r>
+                  </margin>
+                </Layout>
+              </ChartingFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="PortfolioPluginsEngine.dll" EngineDllEntryPoint="ComposerInteractiveCharting" />
+        </Node>
+        <Node ToolID="74">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="1362" y="918" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_7888_a4bb23b9e5356f499cb6a4407346ffc4_\Engine_7888_97e1d84df6553149a516ceed0bd2f379~.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Report</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+      </ChildNodes>
+    </Node>
+    <Node ToolID="59">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="1469" y="641" width="805" height="264" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption><![CDATA[Top Keywords by Room Type ]]></Caption>
+          <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="25" />
+          <Disabled value="True" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="51">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+            <Position x="1494" y="690" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="listing_id" selected="True" />
+                <SelectField field="id" selected="True" />
+                <SelectField field="Right_id" selected="True" />
+                <SelectField field="room_type" selected="True" />
+                <SelectField field="comments_processed" selected="True" />
+                <SelectField field="*Unknown" selected="False" />
+              </SelectFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+        </Node>
+        <Node ToolID="52">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.TextToColumns.TextToColumns">
+            <Position x="1590" y="690" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Field>comments_processed</Field>
+              <Delimeters value="\s" />
+              <NumFields value="1" />
+              <Flags value="0" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTextToColumns" />
+        </Node>
+        <Node ToolID="53">
+          <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+            <Position x="1710" y="690" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SummarizeFields>
+                <SummarizeField field="room_type" action="GroupBy" rename="room_type" />
+                <SummarizeField field="comments_processed" action="GroupBy" rename="comments_processed" />
+                <SummarizeField field="comments_processed" action="Count" rename="Count" />
+              </SummarizeFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+        </Node>
+        <Node ToolID="54">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="1998" y="690" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Expression>[Count] &gt; 7609 or [Count] = 2382 or [Count] = 617 or [Count] = 715</Expression>
+              <Mode>Custom</Mode>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>[Count] &gt; 7609 or [Count] = 2382 or [Count] = 617 or [Count] = 715</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+        <Node ToolID="55">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="1902" y="690" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Expression>[Count] &gt;= 647</Expression>
+              <Mode>Custom</Mode>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>[Count] &gt;= 647</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+        <Node ToolID="56">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+            <Position x="1806" y="690" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SortInfo locale="1033">
+                <Field field="Count" order="Descending" />
+              </SortInfo>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>Count - Descending</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+        </Node>
+        <Node ToolID="57">
+          <GuiSettings Plugin="PlotlyCharting">
+            <Position x="2094" y="690" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <ChartingFields>
+                <Traces json:Array="true" xmlns:json="http://james.newtonking.com/projects/json">
+                  <type>bar</type>
+                  <mode>lines</mode>
+                  <xsrc>comments_processed</xsrc>
+                  <ysrc>Count</ysrc>
+                  <marker>
+                    <size>6</size>
+                    <line>
+                      <width>0</width>
+                    </line>
+                  </marker>
+                  <transforms json:Array="true">
+                    <type>groupby</type>
+                    <groupssrc>room_type</groupssrc>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Private room</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Private room</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Private room</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Private room</groups>
+                    <groups>Private room</groups>
+                    <groups>Private room</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Private room</groups>
+                    <groups>Private room</groups>
+                    <groups>Private room</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Entire home/apt</groups>
+                    <groups>Private room</groups>
+                    <groups>Entire home/apt</groups>
+                  </transforms>
+                  <orientation>v</orientation>
+                </Traces>
+                <Layout>
+                  <title>
+                    <text>
+                    </text>
+                  </title>
+                  <font>
+                    <family>sans-serif</family>
+                    <size>12</size>
+                  </font>
+                  <autosize>false</autosize>
+                  <width>700</width>
+                  <height>849</height>
+                  <showlegend>true</showlegend>
+                  <hovermode>closest</hovermode>
+                  <xaxis>
+                    <range>-0.5</range>
+                    <range>40.5</range>
+                    <autorange>true</autorange>
+                    <title>
+                      <text>comments_processed</text>
+                    </title>
+                    <tickfont>
+                      <size>12</size>
+                    </tickfont>
+                    <nticks>0</nticks>
+                    <type>category</type>
+                  </xaxis>
+                  <yaxis>
+                    <range>0</range>
+                    <range>5831.5789473684208</range>
+                    <autorange>true</autorange>
+                    <title>
+                      <text>Count</text>
+                    </title>
+                    <type>linear</type>
+                  </yaxis>
+                  <margin>
+                    <pad>0</pad>
+                    <t>100</t>
+                    <b>80</b>
+                    <l>80</l>
+                    <r>80</r>
+                  </margin>
+                  <legend>
+                    <font>
+                      <size>12</size>
+                    </font>
+                    <borderwidth>0</borderwidth>
+                  </legend>
+                </Layout>
+              </ChartingFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="PortfolioPluginsEngine.dll" EngineDllEntryPoint="ComposerInteractiveCharting" />
+        </Node>
+        <Node ToolID="58">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="2190" y="690" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Layout>
+                <View1>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+              </Layout>
+              <TempFile>C:\Users\ISAIAH~1\AppData\Local\Temp\Engine_8536_1280dfd5043be748bf19487d37183b77_\Engine_8536_369c2753c9fa1041aaf6435ef77d2eea~.yxdb</TempFile>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="62">
+          <GuiSettings>
+            <Position x="1662" y="750" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Value name="Check Box (135)">True</Value>
+              <Value name="Check Box (136)">False</Value>
+              <Value name="List Box (11)">"comments_processed"</Value>
+              <Value name="Check Box (84)">False</Value>
+              <Value name="Check Box (117)">False</Value>
+              <Value name="Check Box (15)">True</Value>
+              <Value name="Check Box (109)">False</Value>
+              <Value name="Check Box (122)">False</Value>
+              <Value name="Check Box (53)">False</Value>
+              <Value name="Check Box (58)">False</Value>
+              <Value name="Check Box (70)">False</Value>
+              <Value name="Check Box (77)">False</Value>
+              <Value name="Drop Down (81)">upper</Value>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings Macro="Cleanse.yxmc" />
+        </Node>
+        <Node ToolID="63">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+            <Position x="1758" y="774" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Mode>Simple</Mode>
+              <Simple>
+                <Operator>IsNotNull</Operator>
+                <Field>comments_processed</Field>
+                <Operands>
+                  <IgnoreTimeInDateTime>True</IgnoreTimeInDateTime>
+                  <DateType>fixed</DateType>
+                  <PeriodDate>2023-02-27 20:38:23</PeriodDate>
+                  <PeriodType>
+                  </PeriodType>
+                  <PeriodCount>0</PeriodCount>
+                  <Operand>
+                  </Operand>
+                  <StartDate>2023-02-27 20:38:23</StartDate>
+                  <EndDate>2023-02-27 20:38:23</EndDate>
+                </Operands>
+              </Simple>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>!IsNull([comments_processed])</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+        </Node>
+      </ChildNodes>
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection>
+      <Origin ToolID="1" Connection="Output" />
+      <Destination ToolID="31" Connection="Left" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="32" Connection="Output" />
+      <Destination ToolID="31" Connection="Right" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="2" Connection="Output" />
+      <Destination ToolID="9" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="3" Connection="Output" />
+      <Destination ToolID="4" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="4" Connection="Output" />
+      <Destination ToolID="5" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="5" Connection="Output" />
+      <Destination ToolID="6" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="6" Connection="Output" />
+      <Destination ToolID="2" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="8" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="13" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="36" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="51" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="42" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="75" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="16" Connection="True" />
+      <Destination ToolID="3" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="31" Connection="Join" />
+      <Destination ToolID="16" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="75" Connection="Output" />
+      <Destination ToolID="78" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="78" Connection="Estimation" />
+      <Destination ToolID="80" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="80" Connection="Reports" />
+      <Destination ToolID="81" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="80" Connection="Interactive Report" />
+      <Destination ToolID="82" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="83" Connection="Output" />
+      <Destination ToolID="84" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="84" Connection="Output" />
+      <Destination ToolID="85" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="85" Connection="Estimation" />
+      <Destination ToolID="86" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="86" Connection="Reports" />
+      <Destination ToolID="87" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="86" Connection="Interactive Report" />
+      <Destination ToolID="88" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="89" Connection="Output" />
+      <Destination ToolID="83" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="25" Connection="Output" />
+      <Destination ToolID="26" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="26" Connection="Output" />
+      <Destination ToolID="27" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="8" Connection="Output" />
+      <Destination ToolID="25" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="8" Connection="Output" />
+      <Destination ToolID="89" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="24" Connection="False" />
+      <Destination ToolID="17" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="22" Connection="Output26" />
+      <Destination ToolID="10" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="18" Connection="True" />
+      <Destination ToolID="24" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="13" Connection="Output" />
+      <Destination ToolID="22" Connection="Input2" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="12" Connection="Output" />
+      <Destination ToolID="18" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="10" Connection="Output" />
+      <Destination ToolID="23" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="23" Connection="True" />
+      <Destination ToolID="12" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="17" Connection="Output" />
+      <Destination ToolID="29" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="42" Connection="Output" />
+      <Destination ToolID="43" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="43" Connection="Output" />
+      <Destination ToolID="60" Connection="Input2" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="44" Connection="Output" />
+      <Destination ToolID="61" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="45" Connection="False" />
+      <Destination ToolID="64" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="46" Connection="True" />
+      <Destination ToolID="45" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="47" Connection="Output" />
+      <Destination ToolID="46" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="48" Connection="Output" />
+      <Destination ToolID="49" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="60" Connection="Output26" />
+      <Destination ToolID="44" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="61" Connection="True" />
+      <Destination ToolID="47" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="64" Connection="False" />
+      <Destination ToolID="66" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="66" Connection="Unique" />
+      <Destination ToolID="48" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="33" Connection="Output" />
+      <Destination ToolID="34" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="34" Connection="Output" />
+      <Destination ToolID="35" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="36" Connection="Output" />
+      <Destination ToolID="33" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="36" Connection="Output" />
+      <Destination ToolID="39" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="39" Connection="Report" />
+      <Destination ToolID="41" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="39" Connection="Data" />
+      <Destination ToolID="71" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="71" Connection="Output" />
+      <Destination ToolID="73" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="73" Connection="Output" />
+      <Destination ToolID="72" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="72" Connection="Output" />
+      <Destination ToolID="74" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="51" Connection="Output" />
+      <Destination ToolID="52" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="52" Connection="Output" />
+      <Destination ToolID="62" Connection="Input2" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="53" Connection="Output" />
+      <Destination ToolID="63" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="54" Connection="False" />
+      <Destination ToolID="57" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="55" Connection="True" />
+      <Destination ToolID="54" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="56" Connection="Output" />
+      <Destination ToolID="55" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="57" Connection="Output" />
+      <Destination ToolID="58" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="62" Connection="Output26" />
+      <Destination ToolID="53" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="63" Connection="True" />
+      <Destination ToolID="56" Connection="Input" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <RunWithE2 value="True" />
+    <PredictiveToolsCodePage value="1252" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="True" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <MetaInfo>
+      <NameIsFileName value="True" />
+      <Name>Project</Name>
+      <Description />
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName />
+      <SearchTags />
+      <Author />
+      <Company />
+      <Copyright />
+      <DescriptionLink actual="" displayed="" />
+      <Example>
+        <Description />
+        <File />
+      </Example>
+      <WorkflowId value="a340b88c-6b05-4bfa-b373-80f2f0f3c46c" />
+      <Telemetry>
+        <PreviousWorkflowId value="55c1cdf8-e344-43be-bfc7-b2c6fde281a6" />
+        <OriginWorkflowId value="55c1cdf8-e344-43be-bfc7-b2c6fde281a6" />
+      </Telemetry>
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+  </Properties>
+</AlteryxDocument>
